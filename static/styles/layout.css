@@ -12,8 +12,15 @@ body {
   width: 100%;
 }
 
+.books-wrapper-container {
+  width: 100%;
+}
+
 @media (min-width: 1024px) {
   .filters {
-    width: fit-content;
+    width: 250px;
+  }
+  .books-wrapper-container {
+    width: calc(75% - 250px);
   }
 }
