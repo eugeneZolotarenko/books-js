@@ -1,0 +1,35 @@
+:root {
+  /* change this value to change size of whole header */
+  --header-space: 4rem;
+  /**/
+  --header-half-space: calc(var(--header-space) / 2);
+  --header-font-size: var(--header-space);
+  --header-squre-width: calc(var(--header-space) * 1.5);
+  --header-squre-height: calc(
+    var(--header-squre-width) - var(--header-space) / 10
+  );
+}
+
+.main-header-wrapper {
+  width: 100%;
+  padding: var(--header-half-space) 0 var(--header-space)
+    var(--header-half-space);
+  border-bottom: 1px dashed #ccc;
+}
+
+.main-header {
+  font-size: var(--header-font-size);
+  padding: var(--header-half-space) 0 0 var(--header-half-space);
+  position: relative;
+}
+
+.main-header::before {
+  content: "";
+  background-color: #fad84a;
+  width: var(--header-squre-width);
+  height: var(--header-squre-height);
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}

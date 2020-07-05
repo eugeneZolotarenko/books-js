@@ -1,0 +1,33 @@
+.filters {
+  padding: 30px 40px 40px 40px;
+}
+
+.filters__header {
+  font-size: 3rem;
+  margin-top: 20px;
+}
+
+ul.filters__items {
+  padding: 25px 0;
+  line-height: 1.2;
+  border-bottom: 2px solid #cfcfcf;
+}
+
+.filters__items:nth-of-type(2) .filters__item {
+  line-height: 2;
+}
+
+.filters__item-text-input {
+  border: none;
+  width: 50px;
+  margin: 0 7px;
+}
+
+.filters__button {
+  display: block;
+  background-color: #aaaaaa;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  margin: 15px auto 0 auto;
+}

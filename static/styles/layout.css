@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #eeeeee;
+}
+
+.main-header {
+  width: 100%;
+}
+
+.filters {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .filters {
+    width: fit-content;
+  }
+}
