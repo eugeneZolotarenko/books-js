@@ -21,6 +21,21 @@ body {
     width: 250px;
   }
   .books-wrapper-container {
+    width: calc(100% - 250px);
+  }
+}
+
+@media (min-width: 1248px) {
+  .filters {
+    width: 250px;
+  }
+  .books-wrapper-container {
+    width: calc(85% - 250px);
+  }
+}
+
+@media (min-width: 1480px) {
+  .books-wrapper-container {
     width: calc(75% - 250px);
   }
 }
