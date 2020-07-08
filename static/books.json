@@ -4,6 +4,7 @@
       "large": "https://covers.oreillystatic.com/images/9780596517748/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/9780596517748/cat.gif"
     },
+    "id": 1,
     "title": "JavaScript: The Good Parts",
     "author": "Douglas Crockford",
     "releaseDate": "12/2008",
@@ -15,6 +16,7 @@
       "large": "https://covers.oreillystatic.com/images/9780596000486/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/9780596000486/cat.gif"
     },
+    "id": 2,
     "title": "JavaScript: The Definitive Guide",
     "author": "David Flanagan",
     "releaseDate": "11/2001",
@@ -26,6 +28,7 @@
       "large": "https://covers.oreillystatic.com/images/0636920025832/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/0636920025832/cat.gif"
     },
+    "id": 3,
     "title": "Learning JavaScript Design Patterns",
     "author": "Addy Osmani",
     "releaseDate": "08/2012",
@@ -37,6 +40,7 @@
       "large": "https://covers.oreillystatic.com/images/0636920027713/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/0636920027713/cat.gif"
     },
+    "id": 4,
     "title": "JavaScript Enlightenment",
     "author": "Cody Lindley",
     "releaseDate": "12/2012",
@@ -48,6 +52,7 @@
       "large": "https://covers.oreillystatic.com/images/0636920033141/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/0636920033141/cat.gif"
     },
+    "id": 5,
     "title": "Programming JavaScript Applications",
     "author": "Eric Elliott",
     "releaseDate": "07/2014",
@@ -59,6 +64,7 @@
       "large": "https://covers.oreillystatic.com/images/0636920047124/lrg.jpg",
       "small": "https://covers.oreillystatic.com/images/0636920047124/cat.gif"
     },
+    "id": 6,
     "title": "Practical Modern JavaScript",
     "author": "Nicolas Bevacqua",
     "releaseDate": "07/2017",

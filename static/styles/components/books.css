@@ -16,7 +16,7 @@ ul.books-wrapper {
   position: relative;
 }
 
-.book__link {
+.book__open-preview {
   min-width: 130px;
 }
 
@@ -109,7 +109,7 @@ ul.books-wrapper {
     flex-direction: column;
     padding-left: 0;
   }
-  .book__link {
+  .book__open-preview {
     min-width: 200px;
   }
   .book__info-title {

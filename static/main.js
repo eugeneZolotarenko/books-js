@@ -6,11 +6,11 @@ async function getData() {
 function appendBooks(data) {
   data.map((item, i) => {
     const book = `
-    <li class="book">
+    <li class="book js-book" data-id=${item.id}>
         <span class="book__number">${i + 1}</span>
         <a
-        class="book__link"
-        href="${item.link}"
+        class="book__open-preview js-open-preview"
+        href=""
         >
         <img
             class="book_image"
@@ -43,8 +43,31 @@ function appendBooks(data) {
   })
 }
 
+function showPopup(data) {
+  document.querySelectorAll(".js-book").forEach((book) => {
+    book.querySelector(".js-open-preview").addEventListener("click", (e) => {
+      e.preventDefault()
+
+      const previewObj = data.filter(
+        (item) => item.id === parseInt(book.dataset.id)
+      )[0]
+
+      const preview = document.querySelector("#book-preview-popup-image")
+      preview.src = previewObj.cover.large
+      preview.alt = previewObj.title
+
+      const overlay = document.querySelector("#book-preview-popup")
+      overlay.classList.add("active")
+      overlay.addEventListener("click", (e) => {
+        e.target.classList.remove("active")
+      })
+    })
+  })
+}
+
 async function createBooks() {
   const data = await getData()
   appendBooks(data)
+  showPopup(data)
 }
 createBooks()
