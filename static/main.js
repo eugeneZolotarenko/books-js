@@ -3,7 +3,7 @@ async function getData() {
   return await response.json()
 }
 
-function appendBooks(data) {
+function createBooks(data) {
   data.map((item, i) => {
     const book = `
     <li class="book js-book" data-id=${item.id}>
@@ -43,7 +43,7 @@ function appendBooks(data) {
   })
 }
 
-function showPopup(data) {
+function previewPopupOperations(data) {
   document.querySelectorAll(".js-book").forEach((book) => {
     book.querySelector(".js-open-preview").addEventListener("click", (e) => {
       e.preventDefault()
@@ -74,7 +74,7 @@ function showPopup(data) {
 
 async function createBooks() {
   const data = await getData()
-  appendBooks(data)
-  showPopup(data)
+  createBooks(data)
+  previewPopupOperations(data)
 }
 createBooks()

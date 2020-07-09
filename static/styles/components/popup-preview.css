@@ -24,17 +24,17 @@
 }
 
 .book-preview__image {
-  width: 30vw;
-  z-index: 1000;
+  width: 80vw;
+  z-index: 100;
   cursor: default;
 }
 
 .close {
   position: absolute;
-  right: -50px;
-  top: -50px;
-  width: 40px;
-  height: 40px;
+  right: -20px;
+  top: -40px;
+  width: 30px;
+  height: 30px;
   border: 3px solid #9a999a;
   border-radius: 50%;
   display: flex;
@@ -49,8 +49,8 @@
 .close:after {
   position: absolute;
   content: " ";
-  height: 28px;
-  width: 8px;
+  height: 20px;
+  width: 7px;
   background-color: #333;
   transform-origin: center;
 }
@@ -59,4 +59,28 @@
 }
 .close:after {
   transform: rotate(-45deg);
+}
+
+@media (min-width: 760px) {
+  .book-preview__image {
+    width: 30vw;
+  }
+  .close {
+    right: -50px;
+    top: -50px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .close:before,
+  .close:after {
+    height: 28px;
+    width: 8px;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .close {
+    top: -20px;
+  }
 }
