@@ -48,9 +48,9 @@ function showPopup(data) {
     book.querySelector(".js-open-preview").addEventListener("click", (e) => {
       e.preventDefault()
 
-      const previewObj = data.filter(
+      const previewObj = data.find(
         (item) => item.id === parseInt(book.dataset.id)
-      )[0]
+      )
 
       const preview = document.querySelector("#book-preview-popup-image")
       preview.src = previewObj.cover.large
@@ -58,9 +58,16 @@ function showPopup(data) {
 
       const overlay = document.querySelector("#book-preview-popup")
       overlay.classList.add("active")
-      overlay.addEventListener("click", (e) => {
-        e.target.classList.remove("active")
-      })
+      const closeButton = document.querySelector("#close-book-preview-popup")
+
+      const closeBookPreviewPopup = (e) => {
+        if (e.target !== preview) {
+          overlay.classList.remove("active")
+        }
+      }
+
+      overlay.addEventListener("click", closeBookPreviewPopup)
+      closeButton.addEventListener("click", closeBookPreviewPopup)
     })
   })
 }
