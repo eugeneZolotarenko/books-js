@@ -4,10 +4,13 @@ async function getData() {
 }
 
 function createBooks(data) {
-  data.map((item, i) => {
+  const booksContainer = document.querySelector("#books-container")
+  booksContainer.innerHTML = ""
+
+  data.map((item) => {
     const book = `
     <li class="book js-book" data-id=${item.id}>
-        <span class="book__number">${i + 1}</span>
+        <span class="book__number">${item.id}</span>
         <a
         class="book__open-preview js-open-preview"
         href=""
@@ -21,9 +24,7 @@ function createBooks(data) {
         <h4 class="book__info-title">${item.title}</h4>
         <h5 class="book__info-author">By ${item.author}</h5>
         <ul class="book__info-additional">
-            <li class="book__info-additional-item">Release Date: ${
-              item.releaseDate
-            }</li>
+            <li class="book__info-additional-item">Release Date: ${item.releaseDate}</li>
             <li class="book__info-additional-item">Pages: ${item.pages}</li>
             <li class="book__info-additional-item">
             Link:
@@ -37,9 +38,7 @@ function createBooks(data) {
         </div>
     </li>
     `
-    document
-      .querySelector("#books-container")
-      .insertAdjacentHTML("beforeend", book)
+    booksContainer.insertAdjacentHTML("beforeend", book)
   })
 }
 
@@ -72,9 +71,39 @@ function previewPopupOperations(data) {
   })
 }
 
-async function createBooks() {
+const stringForFilters = (str, category) => {
+  if (category === "releaseDate") {
+    const dateArr = str.toString().split("/")
+    return `${dateArr.pop()}${dateArr.shift()}`
+  } else {
+    return str.toString().split(" ").pop()
+  }
+}
+
+function filterByRadio(data) {
+  const filterItems = document.querySelectorAll(".js-filter-item")
+
+  filterItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const radio = item.querySelector(".js-filter-item")
+      if (radio && radio.checked) {
+        const category = radio.dataset.name
+        const sortedData = data.sort((a, b) =>
+          stringForFilters(a[category], category).localeCompare(
+            stringForFilters(b[category], category)
+          )
+        )
+        createBooks(sortedData)
+        previewPopupOperations(sortedData)
+      }
+    })
+  })
+}
+
+async function startAplication() {
   const data = await getData()
   createBooks(data)
   previewPopupOperations(data)
+  filterByRadio(data)
 }
-createBooks()
+startAplication()
