@@ -71,7 +71,7 @@ function previewPopupOperations(data) {
   })
 }
 
-const stringForFilters = (str, category) => {
+const stringForSorting = (str, category) => {
   if (category === "releaseDate") {
     const dateArr = str.toString().split("/")
     return `${dateArr.pop()}${dateArr.shift()}`
@@ -80,21 +80,40 @@ const stringForFilters = (str, category) => {
   }
 }
 
+const sortData = (category, data) =>
+  data.sort((a, b) =>
+    stringForSorting(a[category], category).localeCompare(
+      stringForSorting(b[category], category)
+    )
+  )
+
+const getLocalStorageItem = (name) => {
+  if (localStorage.getItem(name)) {
+    return localStorage.getItem(name)
+  }
+}
+
 function filterByRadio(data) {
   const filterItems = document.querySelectorAll(".js-filter-item")
 
   filterItems.forEach((item) => {
+    const radio = item.querySelector(".js-filter-item")
+    let category = getLocalStorageItem("filterCategory")
+
+    if (category) {
+      createBooks(sortData(category, data))
+      previewPopupOperations(sortData(category, data))
+      if (radio && radio.dataset.name.includes(category)) {
+        radio.checked = true
+      }
+    }
+
     item.addEventListener("click", () => {
-      const radio = item.querySelector(".js-filter-item")
       if (radio && radio.checked) {
-        const category = radio.dataset.name
-        const sortedData = data.sort((a, b) =>
-          stringForFilters(a[category], category).localeCompare(
-            stringForFilters(b[category], category)
-          )
-        )
-        createBooks(sortedData)
-        previewPopupOperations(sortedData)
+        category = radio.dataset.name
+        localStorage.setItem("filterCategory", category)
+        createBooks(sortData(category, data))
+        previewPopupOperations(sortData(category, data))
       }
     })
   })
