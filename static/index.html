@@ -22,7 +22,7 @@
           <label class="filters__item-radio-label">
             <input
               data-name="pages"
-              class="filters__item-radio-input js-filter-item"
+              class="filters__item-radio-input js-filter-radio"
               name="sort"
               type="radio"
             />
@@ -33,7 +33,7 @@
           <label class="filters__item-radio-label">
             <input
               data-name="releaseDate"
-              class="filters__item-radio-input js-filter-item"
+              class="filters__item-radio-input js-filter-radio"
               name="sort"
               type="radio"
             />
@@ -44,7 +44,7 @@
           <label class="filters__item-radio-label">
             <input
               data-name="author"
-              class="filters__item-radio-input js-filter-item"
+              class="filters__item-radio-input js-filter-radio"
               name="sort"
               type="radio"
             />
@@ -54,9 +54,15 @@
       </ul>
       <h2 class="filters__header">Pokaż tylko</h2>
       <ul class="filters__items">
-        <li class="filters__item">
+        <li class="filters__item" id="page-quantity-filter-item">
           <label class="filters__item-text-label">
-            Powyżej <input class="filters__item-text-input" type="text" /> stron
+            Powyżej
+            <input
+              class="filters__item-text-input"
+              id="page-quantity-filter-text"
+              type="number"
+            />
+            stron
           </label>
         </li>
       </ul>

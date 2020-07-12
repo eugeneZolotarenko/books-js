@@ -81,7 +81,7 @@ const stringForSorting = (str, category) => {
 }
 
 const sortData = (category, data) =>
-  data.sort((a, b) =>
+  [...data].sort((a, b) =>
     stringForSorting(a[category], category).localeCompare(
       stringForSorting(b[category], category)
     )
@@ -93,12 +93,13 @@ const getLocalStorageItem = (name) => {
   }
 }
 
-function filterByRadio(data) {
-  const filterItems = document.querySelectorAll(".js-filter-item")
+function sortByRadio(data) {
+  const sortedItems = document.querySelectorAll(".js-filter-item")
 
-  filterItems.forEach((item) => {
-    const radio = item.querySelector(".js-filter-item")
-    let category = getLocalStorageItem("filterCategory")
+  let category = getLocalStorageItem("filterCategory")
+
+  sortedItems.forEach((item) => {
+    const radio = item.querySelector(".js-filter-radio")
 
     if (category) {
       createBooks(sortData(category, data))
@@ -114,15 +115,58 @@ function filterByRadio(data) {
         localStorage.setItem("filterCategory", category)
         createBooks(sortData(category, data))
         previewPopupOperations(sortData(category, data))
+        filterByPageQuantity(sortData(category, data))
       }
     })
   })
+  return category && sortData(category, data)
+}
+
+const delay = (fn, ms) => {
+  let timer = 0
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(fn.bind(this, ...args), ms || 0)
+  }
+}
+
+function filterByPageQuantity(data) {
+  const textInput = document.querySelector("#page-quantity-filter-text")
+  let value = getLocalStorageItem("minPages")
+
+  const getPagesQuantity = () => {
+    const filteredData = data.filter((book) => {
+      return book.pages >= value
+    })
+    createBooks(filteredData)
+    previewPopupOperations(filteredData)
+  }
+
+  if (value) {
+    getPagesQuantity()
+    textInput.value = value
+  }
+
+  textInput.addEventListener(
+    "keyup",
+    delay((e) => {
+      value = textInput.value === "" ? 0 : parseInt(textInput.value)
+      if (
+        (parseInt(e.key) >= 0 && parseInt(e.key) <= 9) ||
+        e.key === "Backspace"
+      ) {
+        localStorage.setItem("minPages", value)
+        getPagesQuantity()
+      }
+    }, 400)
+  )
 }
 
 async function startAplication() {
-  const data = await getData()
+  let data = await getData()
   createBooks(data)
   previewPopupOperations(data)
-  filterByRadio(data)
+  sortByRadio(data)
+  filterByPageQuantity(data)
 }
 startAplication()
