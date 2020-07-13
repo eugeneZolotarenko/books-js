@@ -42,7 +42,7 @@ function createBooks(data) {
   })
 }
 
-function previewPopupOperations(data) {
+function createPreviewPopup(data) {
   document.querySelectorAll(".js-book").forEach((book) => {
     book.querySelector(".js-open-preview").addEventListener("click", (e) => {
       e.preventDefault()
@@ -93,7 +93,7 @@ const getLocalStorageItem = (name) => {
   }
 }
 
-function sortByRadio(data) {
+function sortBooks(data) {
   const sortedItems = document.querySelectorAll(".js-filter-item")
 
   let category = getLocalStorageItem("filterCategory")
@@ -103,10 +103,14 @@ function sortByRadio(data) {
 
     if (category) {
       createBooks(sortData(category, data))
-      previewPopupOperations(sortData(category, data))
+      createPreviewPopup(sortData(category, data))
       if (radio && radio.dataset.name.includes(category)) {
         radio.checked = true
       }
+    } else {
+      createBooks(data)
+      createPreviewPopup(data)
+      radio.checked = false
     }
 
     item.addEventListener("click", () => {
@@ -114,8 +118,7 @@ function sortByRadio(data) {
         category = radio.dataset.name
         localStorage.setItem("filterCategory", category)
         createBooks(sortData(category, data))
-        previewPopupOperations(sortData(category, data))
-        filterByPageQuantity(sortData(category, data))
+        createPreviewPopup(sortData(category, data))
       }
     })
   })
@@ -134,17 +137,19 @@ function filterByPageQuantity(data) {
   const textInput = document.querySelector("#page-quantity-filter-text")
   let value = getLocalStorageItem("minPages")
 
-  const getPagesQuantity = () => {
+  const sortBooksWithPagesQuantity = () => {
     const filteredData = data.filter((book) => {
       return book.pages >= value
     })
-    createBooks(filteredData)
-    previewPopupOperations(filteredData)
+    sortBooks(filteredData)
   }
 
   if (value) {
-    getPagesQuantity()
+    sortBooksWithPagesQuantity()
     textInput.value = value
+  } else {
+    sortBooks(data)
+    textInput.value = ""
   }
 
   textInput.addEventListener(
@@ -153,20 +158,32 @@ function filterByPageQuantity(data) {
       value = textInput.value === "" ? 0 : parseInt(textInput.value)
       if (
         (parseInt(e.key) >= 0 && parseInt(e.key) <= 9) ||
-        e.key === "Backspace"
+        e.key === "Backspace" ||
+        e.key === "ArrowDown" ||
+        e.key === "ArrowUp"
       ) {
         localStorage.setItem("minPages", value)
-        getPagesQuantity()
+        sortBooksWithPagesQuantity()
       }
     }, 400)
   )
 }
 
+function resetFilters(data) {
+  const reset = () => {
+    localStorage.clear()
+    filterByPageQuantity(data)
+  }
+  const resetBtn = document.querySelector("#reset-filters-button")
+  resetBtn.addEventListener("click", () => reset())
+  resetBtn.addEventListener("keydown", () => {
+    reset()
+  })
+}
+
 async function startAplication() {
   let data = await getData()
-  createBooks(data)
-  previewPopupOperations(data)
-  sortByRadio(data)
   filterByPageQuantity(data)
+  resetFilters(data)
 }
 startAplication()

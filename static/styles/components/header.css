@@ -14,6 +14,7 @@
   width: 100%;
   padding: var(--header-half-space) 0 var(--header-space)
     var(--header-half-space);
+  max-height: calc(var(--header-space) * 3);
   border-bottom: 1px dashed #ccc;
 }
 
