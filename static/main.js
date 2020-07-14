@@ -39,6 +39,7 @@ function createBooks(data) {
     </li>
     `
     booksContainer.insertAdjacentHTML("beforeend", book)
+    createPreviewPopup(data)
   })
 }
 
@@ -103,13 +104,11 @@ function sortBooks(data) {
 
     if (category) {
       createBooks(sortData(category, data))
-      createPreviewPopup(sortData(category, data))
       if (radio && radio.dataset.name.includes(category)) {
         radio.checked = true
       }
     } else {
       createBooks(data)
-      createPreviewPopup(data)
       radio.checked = false
     }
 
@@ -118,7 +117,6 @@ function sortBooks(data) {
         category = radio.dataset.name
         localStorage.setItem("filterCategory", category)
         createBooks(sortData(category, data))
-        createPreviewPopup(sortData(category, data))
       }
     })
   })
@@ -175,10 +173,20 @@ function resetFilters(data) {
     filterByPageQuantity(data)
   }
   const resetBtn = document.querySelector("#reset-filters-button")
-  resetBtn.addEventListener("click", () => reset())
-  resetBtn.addEventListener("keydown", () => {
-    reset()
+
+  const activeKeys = {}
+  const onKeysDown = (onkeyup = (e) => {
+    if (e.keyCode === 17 || e.keyCode === 82) {
+      e.preventDefault()
+      activeKeys[e.keyCode] = e.type === "keydown"
+      if (activeKeys[17] && activeKeys[82]) {
+        reset()
+      }
+    }
   })
+
+  resetBtn.addEventListener("click", () => reset())
+  document.addEventListener("keydown", onKeysDown)
 }
 
 async function startAplication() {
