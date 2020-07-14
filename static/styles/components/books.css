@@ -89,6 +89,12 @@ ul.books-wrapper {
   font-weight: 900;
 }
 
+.book__no-books {
+  font-size: 25px;
+  text-align: center;
+  margin-top: 10%;
+}
+
 @media (min-width: 550px) {
   .book__number {
     font-size: 5.7rem;
