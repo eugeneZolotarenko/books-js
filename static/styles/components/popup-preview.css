@@ -42,9 +42,11 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .close:hover {
   opacity: 1;
 }
+
 .close:before,
 .close:after {
   position: absolute;
@@ -54,9 +56,11 @@
   background-color: #333;
   transform-origin: center;
 }
+
 .close:before {
   transform: rotate(45deg);
 }
+
 .close:after {
   transform: rotate(-45deg);
 }

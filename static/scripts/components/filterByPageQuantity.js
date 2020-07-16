@@ -1,19 +1,30 @@
 import sortBooks from "./sortBooks.js"
 import { delay, getLocalStorageItem } from "../helpers.js"
 
+const sortBooksWithPagesQuantity = (data, value) => {
+  const filteredData = data.filter((book) => book.pages >= value)
+  sortBooks(filteredData)
+}
+
+const listenTextInput = (e, data) => {
+  const value = e.target.value === "" ? 0 : parseInt(e.target.value)
+  if (
+    (parseInt(e.key) >= 0 && parseInt(e.key) <= 9) ||
+    e.key === "Backspace" ||
+    e.key === "ArrowDown" ||
+    e.key === "ArrowUp"
+  ) {
+    localStorage.setItem("minPages", value)
+    sortBooksWithPagesQuantity(data, value)
+  }
+}
+
 function filterByPageQuantity(data) {
   const textInput = document.querySelector("#page-quantity-filter-text")
-  let value = getLocalStorageItem("minPages")
-
-  const sortBooksWithPagesQuantity = () => {
-    const filteredData = data.filter((book) => {
-      return book.pages >= value
-    })
-    sortBooks(filteredData)
-  }
+  const value = getLocalStorageItem("minPages")
 
   if (value) {
-    sortBooksWithPagesQuantity()
+    sortBooksWithPagesQuantity(data, value)
     textInput.value = value
   } else {
     sortBooks(data)
@@ -22,18 +33,7 @@ function filterByPageQuantity(data) {
 
   textInput.addEventListener(
     "keyup",
-    delay((e) => {
-      value = textInput.value === "" ? 0 : parseInt(textInput.value)
-      if (
-        (parseInt(e.key) >= 0 && parseInt(e.key) <= 9) ||
-        e.key === "Backspace" ||
-        e.key === "ArrowDown" ||
-        e.key === "ArrowUp"
-      ) {
-        localStorage.setItem("minPages", value)
-        sortBooksWithPagesQuantity()
-      }
-    }, 400)
+    delay((e) => listenTextInput(e, data), 400)
   )
 }
 
