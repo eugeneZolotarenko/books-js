@@ -1,19 +1,15 @@
 import createBooks from "./createBooks.js"
 import { getLocalStorageItem } from "../helpers.js"
 
-const stringForSorting = (str, category) => {
-  if (category === "releaseDate") {
-    const dateArr = str.toString().split("/")
-    return `${dateArr.pop()}${dateArr.shift()}`
-  } else {
-    return str.toString().split(" ").pop()
-  }
-}
+const valueForSorting = (val, category) =>
+  category === "releaseDate"
+    ? val.toString().split("/").reverse().join("")
+    : val.toString().split(" ").pop()
 
 const sortData = (category, data) =>
   [...data].sort((a, b) =>
-    stringForSorting(a[category], category).localeCompare(
-      stringForSorting(b[category], category)
+    valueForSorting(a[category], category).localeCompare(
+      valueForSorting(b[category], category)
     )
   )
 
@@ -43,7 +39,6 @@ function sortBooks(data) {
       }
     })
   })
-  return category && sortData(category, data)
 }
 
 export default sortBooks
